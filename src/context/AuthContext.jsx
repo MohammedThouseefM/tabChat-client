@@ -27,12 +27,12 @@ export const AuthProvider = ({ children }) => {
 
     const login = () => {
         const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        window.location.href = `${baseURL}/auth/google`;
+        window.location.href = new URL('/auth/google', baseURL).toString();
     };
 
     const logout = () => {
         const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        window.location.href = `${baseURL}/auth/logout`;
+        window.location.href = new URL('/auth/logout', baseURL).toString();
     };
 
     const value = {
