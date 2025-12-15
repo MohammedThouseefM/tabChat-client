@@ -1,0 +1,424 @@
+/* Global Reset & Base Styles */
+:root {
+  --bg-color: #0f172a;
+  /* Slate 900 */
+  --card-bg: #1e293b;
+  /* Slate 800 */
+  --text-primary: #f8fafc;
+  /* Slate 50 */
+  --text-secondary: #94a3b8;
+  /* Slate 400 */
+  --accent-color: #3b82f6;
+  /* Blue 500 */
+  --accent-hover: #2563eb;
+  /* Blue 600 */
+  --border-color: #334155;
+  /* Slate 700 */
+  --nav-width: 250px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.relative {
+    position: relative;
+}
+
+/* Responsive Utilities */
+.hidden-mobile {
+    display: none;
+}
+
+.hidden-desktop {
+    display: block;
+}
+
+@media (min-width: 769px) {
+    .hidden-mobile {
+        display: block; /* or flex/grid depending on context, usually override in specific class */
+    }
+    .hidden-desktop {
+        display: none;
+    }
+}
+
+/* Components */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+}
+.btn-ghost:hover {
+    color: var(--text-primary);
+    background: rgba(255,255,255,0.05);
+}
+
+.btn-icon {
+    padding: 0.5rem;
+    background: none;
+    color: var(--text-secondary);
+    border-radius: 50%;
+}
+.btn-icon:hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--text-primary);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--nav-width);
+  background: var(--card-bg);
+  border-right: 1px solid var(--border-color);
+  padding: 2rem;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-color);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: var(--nav-width);
+  padding: 2rem;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* PostCard Specifics */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+.post-actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+.post-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 1rem;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+/* Messages Specifics */
+.messages-container {
+    display: flex;
+    gap: 1rem;
+    height: calc(100vh - 4rem);
+    width: 100%;
+    overflow: hidden;
+}
+
+.messages-list {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+}
+
+.user-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 1px solid transparent;
+}
+.user-list-item:hover {
+    background: rgba(255,255,255,0.05);
+}
+.user-list-item.active {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-color);
+}
+
+.chat-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 0.75rem 1rem;
+    position: relative;
+    word-break: break-word;
+}
+.message-bubble.me {
+    align-self: flex-end;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 12px 12px 0 12px;
+}
+.message-bubble.them {
+    align-self: flex-start;
+    background: var(--border-color);
+    color: white;
+    border-radius: 12px 12px 12px 0;
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+    padding-bottom: 70px; /* Space for bottom nav if used, or just safe area */
+  }
+
+  /* Sidebar transforms into bottom nav or top header, 
+     but current design had sidebar. Let's make it a bottom nav for mobile ease?
+     Or keep it simple as top header + drawer.
+     Let's stick to the current plan: Sidebar becomes top/static.
+  */
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    padding: 0.5rem;
+    border-right: none;
+    border-top: 1px solid var(--border-color);
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+      display: none; /* Hide user info in bottom nav to save space */
+  }
+
+  .sidebar-nav {
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-around;
+  }
+  
+  .sidebar-nav a {
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      font-size: 0.7rem;
+  }
+  .sidebar-nav a svg {
+      font-size: 1.2rem;
+  }
+
+  .sidebar-footer {
+      display: none; /* Hide logout on main view, maybe move to profile? */
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+    margin-bottom: 70px; /* Space for bottom nav */
+    max-width: 100%;
+  }
+
+  /* Messages Mobile View */
+  .messages-container {
+      height: calc(100vh - 140px); /* Adjust for bottom nav and headers */
+      position: relative;
+  }
+
+  .messages-list {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 10;
+      background: var(--bg-color);
+      transition: transform 0.3s ease;
+  }
+
+  .chat-window {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 20;
+      background: var(--bg-color);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+  }
+
+  /* Classes to control visibility state via JS toggling classes or styles */
+  .messages-mobile-view-list .messages-list {
+      transform: translateX(0);
+  }
+  .messages-mobile-view-list .chat-window {
+      transform: translateX(100%);
+  }
+
+  .messages-mobile-view-chat .messages-list {
+       transform: translateX(-100%); /* Optional: slide out */
+  }
+  .messages-mobile-view-chat .chat-window {
+      transform: translateX(0);
+  }
+}
