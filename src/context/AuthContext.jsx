@@ -26,12 +26,12 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = () => {
-        const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const baseURL = import.meta.env.VITE_API_URL || 'https://server-kyf8.onrender.com';
         window.location.href = new URL('/auth/google', baseURL).toString();
     };
 
     const logout = () => {
-        const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const baseURL = import.meta.env.VITE_API_URL || 'https://server-kyf8.onrender.com';
         window.location.href = new URL('/auth/logout', baseURL).toString();
     };
 
