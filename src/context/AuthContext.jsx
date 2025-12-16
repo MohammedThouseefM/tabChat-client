@@ -32,7 +32,8 @@ export const AuthProvider = ({ children }) => {
 
     const loginWithEmail = async (email, password) => {
         try {
-            const { data } = await API.post('/auth/login', { email, password });
+            const baseURL = import.meta.env.VITE_API_URL || 'https://server-kyf8.onrender.com';
+            const { data } = await API.post('/auth/login', { email, password }, { baseURL });
             setUser(data);
             return { success: true };
         } catch (error) {
@@ -42,7 +43,8 @@ export const AuthProvider = ({ children }) => {
 
     const registerWithEmail = async (displayName, email, password) => {
         try {
-            const { data } = await API.post('/auth/register', { displayName, email, password });
+            const baseURL = import.meta.env.VITE_API_URL || 'https://server-kyf8.onrender.com';
+            const { data } = await API.post('/auth/register', { displayName, email, password }, { baseURL });
             setUser(data);
             return { success: true };
         } catch (error) {
