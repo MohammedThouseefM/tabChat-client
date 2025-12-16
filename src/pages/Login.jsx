@@ -28,57 +28,56 @@ const Login = () => {
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div className="card" style={{ maxWidth: '400px', width: '100%', textAlign: 'center' }}>
+        <div className="flex items-center justify-center" style={{ height: '100vh' }}>
+            <div className="card auth-card flex flex-col items-center">
                 <h1 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Welcome Back</h1>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Sign in to connect with friends</p>
 
-                {error && <div className="alert alert-error" style={{ marginBottom: '1rem', color: 'red' }}>{error}</div>}
+                {error && <div className="alert alert-error w-full">{error}</div>}
 
-                <form onSubmit={handleSubmit} style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
-                    <div style={{ marginBottom: '1rem' }}>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Email</label>
+                <form onSubmit={handleSubmit} className="w-full mb-4">
+                    <div className="form-group">
+                        <label className="label">Email</label>
                         <input
                             type="email"
                             className="input"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            style={{ width: '100%' }}
+                            placeholder="Enter your email"
                         />
                     </div>
-                    <div style={{ marginBottom: '1rem' }}>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Password</label>
+                    <div className="form-group">
+                        <label className="label">Password</label>
                         <input
                             type="password"
                             className="input"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            style={{ width: '100%' }}
+                            placeholder="Enter your password"
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+                    <button type="submit" className="btn btn-primary w-full">
                         Log In
                     </button>
                 </form>
 
-                <div style={{ display: 'flex', alignItems: 'center', margin: '1.5rem 0' }}>
+                <div className="flex items-center w-full my-4" style={{ margin: '1.5rem 0' }}>
                     <div style={{ flex: 1, borderBottom: '1px solid var(--border-color)' }}></div>
-                    <span style={{ padding: '0 10px', color: 'var(--text-secondary)' }}>OR</span>
+                    <span style={{ padding: '0 10px', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>OR</span>
                     <div style={{ flex: 1, borderBottom: '1px solid var(--border-color)' }}></div>
                 </div>
 
                 <button
                     onClick={login}
-                    className="btn btn-secondary"
-                    style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                    className="btn btn-secondary w-full"
                 >
                     <FaGoogle /> Sign in with Google
                 </button>
 
                 <p style={{ marginTop: '1.5rem', color: 'var(--text-secondary)' }}>
-                    Don't have an account? <a href="/register" style={{ color: 'var(--primary-color)' }}>Sign up</a>
+                    Don't have an account? <a href="/register" style={{ color: 'var(--accent-color)', fontWeight: '600' }}>Sign up</a>
                 </p>
             </div>
         </div>

@@ -4,6 +4,8 @@
   /* Slate 900 */
   --card-bg: #1e293b;
   /* Slate 800 */
+  --input-bg: #334155;
+  /* Slate 700 */
   --text-primary: #f8fafc;
   /* Slate 50 */
   --text-secondary: #94a3b8;
@@ -14,6 +16,8 @@
   /* Blue 600 */
   --border-color: #334155;
   /* Slate 700 */
+  --error-color: #ef4444;
+  /* Red 500 */
   --nav-width: 250px;
 }
 
@@ -34,6 +38,11 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--accent-color);
 }
 
 button {
@@ -58,7 +67,11 @@ button {
 }
 
 .items-center {
-  align-items: center;
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
 }
 
 .justify-between {
@@ -107,6 +120,41 @@ button {
     }
 }
 
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-color); /* Darker than card */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
 /* Components */
 .btn {
   padding: 0.75rem 1.5rem;
@@ -117,6 +165,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  font-size: 1rem;
 }
 
 .btn-primary {
@@ -127,6 +176,17 @@ button {
 .btn-primary:hover {
   background-color: var(--accent-hover);
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #1f2937; /* Dark gray text */
+    border: 1px solid #e2e8f0;
+}
+.btn-secondary:hover {
+    background-color: #f8fafc;
+    transform: translateY(-1px);
 }
 
 .btn-ghost {
@@ -153,14 +213,33 @@ button {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.auth-card {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .avatar {
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+}
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: var(--error-color);
 }
 
 /* Layout */
