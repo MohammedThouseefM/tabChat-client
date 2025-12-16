@@ -8,7 +8,16 @@ const API = axios.create({
     withCredentials: true,
 });
 
-// Interceptor to handle errors (optional)
+// Interceptor to add auth token
+API.interceptors.request.use((req) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.token) {
+        req.headers.Authorization = `Bearer ${user.token}`;
+    }
+    return req;
+});
+
+// Interceptor to handle errors
 API.interceptors.response.use(
     (response) => response,
     (error) => {
