@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Layout from './pages/Layout';
 import Feed from './pages/Feed';
 import Messages from './pages/Messages';
@@ -21,6 +22,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
         <Route path="/feed" element={<Feed />} />
         <Route path="/messages" element={<Messages />} />

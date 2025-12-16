@@ -30,6 +30,26 @@ export const AuthProvider = ({ children }) => {
         window.location.href = new URL('/auth/google', baseURL).toString();
     };
 
+    const loginWithEmail = async (email, password) => {
+        try {
+            const { data } = await API.post('/auth/login', { email, password });
+            setUser(data);
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || 'Login failed' };
+        }
+    };
+
+    const registerWithEmail = async (displayName, email, password) => {
+        try {
+            const { data } = await API.post('/auth/register', { displayName, email, password });
+            setUser(data);
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || 'Registration failed' };
+        }
+    };
+
     const logout = () => {
         const baseURL = import.meta.env.VITE_API_URL || 'https://server-kyf8.onrender.com';
         window.location.href = new URL('/auth/logout', baseURL).toString();
@@ -39,6 +59,8 @@ export const AuthProvider = ({ children }) => {
         user,
         loading,
         login,
+        loginWithEmail,
+        registerWithEmail,
         logout,
     };
 
