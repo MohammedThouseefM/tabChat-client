@@ -36,17 +36,13 @@ const Layout = () => {
                 <div className="sidebar-footer">
                     <button
                         onClick={logout}
-                        className="sidebar-nav"
+                        className="sidebar-nav-item btn-ghost w-full justify-start"
                         style={{
-                            width: '100%',
-                            background: 'transparent',
-                            border: 'none',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '0.75rem',
                             padding: '1rem',
                             color: 'var(--text-secondary)',
-                            cursor: 'pointer',
                             fontSize: '1rem'
                         }}
                     >
