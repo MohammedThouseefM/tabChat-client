@@ -62,61 +62,37 @@ const Profile = () => {
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Display Name</label>
+                    <div className="form-group">
+                        <label className="label">Display Name</label>
                         <input
                             type="text"
                             name="displayName"
                             value={formData.displayName}
                             onChange={handleChange}
-                            style={{
-                                width: '100%',
-                                padding: '0.75rem',
-                                background: 'rgba(255,255,255,0.05)',
-                                border: '1px solid var(--border-color)',
-                                borderRadius: '8px',
-                                color: 'var(--text-primary)',
-                                outline: 'none'
-                            }}
+                            className="input"
                         />
                     </div>
 
-                    <div className="mb-4">
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Bio</label>
+                    <div className="form-group">
+                        <label className="label">Bio</label>
                         <textarea
                             name="bio"
                             value={formData.bio}
                             onChange={handleChange}
                             rows="3"
-                            style={{
-                                width: '100%',
-                                padding: '0.75rem',
-                                background: 'rgba(255,255,255,0.05)',
-                                border: '1px solid var(--border-color)',
-                                borderRadius: '8px',
-                                color: 'var(--text-primary)',
-                                outline: 'none',
-                                resize: 'none'
-                            }}
+                            className="input"
+                            style={{ resize: 'none' }}
                             placeholder="Tell us about yourself..."
                         />
                     </div>
 
-                    <div className="mb-4">
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Gender</label>
+                    <div className="form-group">
+                        <label className="label">Gender</label>
                         <select
                             name="gender"
                             value={formData.gender}
                             onChange={handleChange}
-                            style={{
-                                width: '100%',
-                                padding: '0.75rem',
-                                background: 'rgba(255,255,255,0.05)',
-                                border: '1px solid var(--border-color)',
-                                borderRadius: '8px',
-                                color: 'var(--text-primary)',
-                                outline: 'none'
-                            }}
+                            className="input"
                         >
                             <option value="Not specified">Not specified</option>
                             <option value="Male">Male</option>
@@ -127,17 +103,16 @@ const Profile = () => {
 
                     <button
                         type="submit"
-                        className="btn btn-primary"
+                        className="btn btn-primary w-full"
                         disabled={loading}
-                        style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}
                     >
                         <FaSave /> {loading ? 'Saving...' : 'Save Profile'}
                     </button>
 
                     {message && (
-                        <p style={{ marginTop: '1rem', textAlign: 'center', color: message.includes('success') ? '#10b981' : '#ef4444' }}>
+                        <div className={`alert ${message.includes('success') ? 'alert-success' : 'alert-error'} mt-4 text-center`}>
                             {message}
-                        </p>
+                        </div>
                     )}
                 </form>
             </div>

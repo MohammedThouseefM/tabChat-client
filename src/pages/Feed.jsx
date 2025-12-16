@@ -78,25 +78,20 @@ const Feed = () => {
             <div className="card mb-4" style={{ position: 'relative' }}>
                 <form onSubmit={handleSubmit}>
                     <textarea
-                        className="input-field"
+                        className="input"
                         placeholder="What's on your mind?"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         style={{
-                            width: '100%',
-                            background: 'transparent',
-                            border: 'none',
-                            color: 'var(--text-primary)',
                             resize: 'none',
-                            outline: 'none',
-                            fontSize: '1rem',
-                            marginBottom: '1rem'
+                            marginBottom: '1rem',
+                            minHeight: '100px'
                         }}
                         rows="3"
                     />
 
                     {/* AI Tools */}
-                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                    <div className="flex gap-2 mb-4 flex-wrap">
                         <button
                             type="button"
                             onClick={() => handleAIEnhance('tone', 'professional')}
@@ -136,40 +131,32 @@ const Feed = () => {
                     </div>
 
                     {image && (
-                        <div style={{ position: 'relative' }}>
-                            <img src={image} alt="Preview" style={{ width: '100%', borderRadius: '8px', marginBottom: '1rem' }} />
+                        <div className="relative mb-4">
+                            <img src={image} alt="Preview" className="w-full rounded-lg" />
                         </div>
                     )}
-                    <div className="flex justify-between items-center">
-                        <div style={{ display: 'flex', gap: '0.5rem', flex: 1, marginRight: '1rem' }}>
+                    <div className="flex justify-between items-center gap-4">
+                        <div className="flex-1 flex gap-2">
                             <input
                                 type="text"
                                 placeholder="Image URL (optional)"
                                 value={image}
                                 onChange={(e) => setImage(e.target.value)}
-                                style={{
-                                    background: 'rgba(255,255,255,0.05)',
-                                    border: 'none',
-                                    padding: '0.5rem',
-                                    borderRadius: '4px',
-                                    color: 'var(--text-secondary)',
-                                    width: '100%'
-                                }}
+                                className="input"
                             />
                             {image && (
                                 <button
                                     type="button"
                                     onClick={handleAICaption}
                                     title="Generate Caption"
-                                    className="btn"
+                                    className="btn btn-ghost"
                                     disabled={aiLoading}
-                                    style={{ padding: '0.5rem', background: 'rgba(255,255,255,0.1)' }}
                                 >
-                                    <FaImage /> AI Caption
+                                    <FaImage />
                                 </button>
                             )}
                         </div>
-                        <button type="submit" className="btn btn-primary flex items-center gap-4" disabled={aiLoading}>
+                        <button type="submit" className="btn btn-primary" disabled={aiLoading}>
                             <FaPaperPlane /> {aiLoading ? 'Thinking...' : 'Post'}
                         </button>
                     </div>
