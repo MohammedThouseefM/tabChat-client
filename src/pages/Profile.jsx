@@ -48,16 +48,16 @@ const Profile = () => {
     return (
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <div className="card mb-4">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+                <div className="profile-header">
                     <Avatar
                         src={user?.avatar}
                         name={user?.displayName}
                         size="100px"
-                        style={{ border: '3px solid var(--accent-color)' }}
+                        style={{ border: '3px solid var(--accent-color)', flexShrink: 0 }}
                     />
-                    <div>
-                        <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{user?.displayName}</h2>
-                        <p style={{ color: 'var(--text-secondary)' }}>{user?.email}</p>
+                    <div className="profile-info">
+                        <h2 className="profile-name">{user?.displayName}</h2>
+                        <p style={{ color: 'var(--text-secondary)', wordBreak: 'break-all' }}>{user?.email}</p>
                     </div>
                 </div>
 

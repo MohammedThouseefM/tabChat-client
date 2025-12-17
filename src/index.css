@@ -675,6 +675,36 @@ button {
   border: 1px solid var(--border-color);
 }
 
+/* Profile Page Styles */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-info {
+  min-width: 0;
+  /* Critical for flex child text truncation */
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+}
+
+@media (max-width: 480px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
 /* Upload Area Styles */
 .upload-area {
   display: block;
