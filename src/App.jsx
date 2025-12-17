@@ -9,18 +9,21 @@ import Messages from './pages/Messages';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
 import UserProfile from './pages/UserProfile';
-
 import CreatePost from './pages/CreatePost';
+import Loader from './components/Loader';
 
-// Protected Route Wrapper
+// Protected Route Wrapper (Inline definition restored)
 const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>Loading...</div>;
+  const { user } = useAuth();
+  // Loading is handled globally in AppRoutes now, but safety check:
   return user ? children : <Navigate to="/" />;
 };
 
 function AppRoutes() {
+  const { loading } = useAuth();
+
+  if (loading) return <Loader />;
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />
