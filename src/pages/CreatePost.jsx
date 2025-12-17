@@ -7,7 +7,31 @@ const CreatePost = () => {
     const [content, setContent] = useState('');
     const [image, setImage] = useState('');
     const [aiLoading, setAiLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const navigate = useNavigate();
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        setUploading(true);
+        try {
+            const { data } = await API.post('/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            setImage(data.imageUrl);
+        } catch (err) {
+            console.error(err);
+            alert('Failed to upload image');
+        } finally {
+            setUploading(false);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -114,17 +138,28 @@ const CreatePost = () => {
                     {image && (
                         <div className="relative mb-4">
                             <img src={image} alt="Preview" className="w-full rounded-lg" />
+                            <button
+                                type="button"
+                                onClick={() => setImage('')}
+                                className="absolute top-2 right-2 btn btn-icon"
+                                style={{ background: 'rgba(0,0,0,0.5)', color: 'white' }}
+                            >
+                                x
+                            </button>
                         </div>
                     )}
                     <div className="flex justify-between items-center gap-4">
-                        <div className="flex-1 flex gap-2">
-                            <input
-                                type="text"
-                                placeholder="Image URL (optional)"
-                                value={image}
-                                onChange={(e) => setImage(e.target.value)}
-                                className="input"
-                            />
+                        <div className="flex-1 flex gap-2 items-center">
+                            <label className="btn btn-secondary cursor-pointer">
+                                <FaImage /> Upload Image
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    className="hidden"
+                                />
+                            </label>
+                            {/* Hidden Image URL input for fallback/manual entry if needed, but let's hide it for now to enforce "perfect" upload */}
                             {image && (
                                 <button
                                     type="button"
@@ -133,12 +168,12 @@ const CreatePost = () => {
                                     className="btn btn-ghost"
                                     disabled={aiLoading}
                                 >
-                                    <FaImage />
+                                    <FaMagic /> AI Caption
                                 </button>
                             )}
                         </div>
-                        <button type="submit" className="btn btn-primary" disabled={aiLoading}>
-                            <FaPaperPlane /> {aiLoading ? 'Thinking...' : 'Post'}
+                        <button type="submit" className="btn btn-primary" disabled={aiLoading || uploading}>
+                            <FaPaperPlane /> {aiLoading ? 'Thinking...' : (uploading ? 'Uploading...' : 'Post')}
                         </button>
                     </div>
                 </form>
