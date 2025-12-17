@@ -27,16 +27,16 @@ const Layout = () => {
                         <FaHome /> <span>Feed</span>
                     </NavLink>
                     <NavLink to="/create-post" className={({ isActive }) => (isActive ? 'active' : '')}>
-                        <FaPlusSquare /> <span>Create Post</span>
+                        <FaPlusSquare /> <span>Add Post</span>
                     </NavLink>
                     <NavLink to="/messages" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <FaEnvelope /> <span>Messages</span>
                     </NavLink>
-                    <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>
-                        <FaUser /> <span>Profile</span>
-                    </NavLink>
                     <NavLink to="/notifications" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <FaBell /> <span>Notifications</span>
+                    </NavLink>
+                    <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>
+                        <FaUser /> <span>Profile</span>
                     </NavLink>
                 </nav>
 
