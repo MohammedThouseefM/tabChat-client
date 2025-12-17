@@ -135,23 +135,43 @@ const CreatePost = () => {
                         </button>
                     </div>
 
-                    {image && (
-                        <div className="relative mb-4">
-                            <img src={image} alt="Preview" className="w-full rounded-lg" />
-                            <button
-                                type="button"
-                                onClick={() => setImage('')}
-                                className="absolute top-2 right-2 btn btn-icon"
-                                style={{ background: 'rgba(0,0,0,0.5)', color: 'white' }}
-                            >
-                                x
-                            </button>
-                        </div>
-                    )}
-                    <div className="flex justify-between items-center gap-4">
-                        <div className="flex-1 flex gap-2 items-center">
-                            <label className="btn btn-secondary cursor-pointer">
-                                <FaImage /> Upload Image
+                    {/* Upload / Preview Area */}
+                    <div className="mb-4">
+                        {image ? (
+                            <div className="relative rounded-xl overflow-hidden border border-[var(--border-color)] group">
+                                <img src={image} alt="Preview" className="w-full object-cover max-h-[400px]" />
+
+                                {/* Overlay Actions */}
+                                <div className="absolute top-2 right-2 flex gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={handleAICaption}
+                                        title="Generate AI Caption"
+                                        className="btn btn-sm"
+                                        disabled={aiLoading}
+                                        style={{ background: 'rgba(0,0,0,0.6)', color: 'white', backdropFilter: 'blur(4px)', border: '1px solid rgba(255,255,255,0.2)' }}
+                                    >
+                                        <FaMagic /> Caption
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setImage('')}
+                                        className="btn btn-icon"
+                                        style={{ background: 'rgba(0,0,0,0.6)', color: 'white', backdropFilter: 'blur(4px)', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.2)' }}
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <label className="upload-area">
+                                <div className="upload-placeholder">
+                                    <div className="upload-icon-wrapper">
+                                        <FaImage style={{ fontSize: '1.5rem' }} />
+                                    </div>
+                                    <span style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--text-primary)' }}>Add Photo</span>
+                                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>or drag and drop</span>
+                                </div>
                                 <input
                                     type="file"
                                     accept="image/*"
@@ -159,20 +179,11 @@ const CreatePost = () => {
                                     className="hidden"
                                 />
                             </label>
-                            {/* Hidden Image URL input for fallback/manual entry if needed, but let's hide it for now to enforce "perfect" upload */}
-                            {image && (
-                                <button
-                                    type="button"
-                                    onClick={handleAICaption}
-                                    title="Generate Caption"
-                                    className="btn btn-ghost"
-                                    disabled={aiLoading}
-                                >
-                                    <FaMagic /> AI Caption
-                                </button>
-                            )}
-                        </div>
-                        <button type="submit" className="btn btn-primary" disabled={aiLoading || uploading}>
+                        )}
+                    </div>
+
+                    <div className="flex justify-end items-center">
+                        <button type="submit" className="btn btn-primary" disabled={aiLoading || uploading} style={{ minWidth: '120px' }}>
                             <FaPaperPlane /> {aiLoading ? 'Thinking...' : (uploading ? 'Uploading...' : 'Post')}
                         </button>
                     </div>
