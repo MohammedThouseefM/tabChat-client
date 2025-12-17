@@ -10,7 +10,8 @@ const Header = () => {
     return (
         <header className="app-header">
             <div className="header-brand">
-                <h1>Tap To Chat</h1>
+                <img src="/logo.png" alt="Tap To Connect Logo" className="header-logo" />
+                <h1>Tap To Connect</h1>
             </div>
             {user && (
                 <div className="header-profile" onClick={() => navigate('/profile')}>
