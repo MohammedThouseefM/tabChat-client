@@ -368,16 +368,22 @@ button {
   border-left: 3px solid transparent;
 }
 
+
 .sidebar-nav a:hover {
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text-primary);
-  transform: translateX(4px);
+  /* Remove hover effects as requested */
+  background: transparent;
+  color: var(--text-secondary);
+  transform: none;
 }
 
 .sidebar-nav a.active {
   background: rgba(59, 130, 246, 0.1);
-  color: var(--accent-color);
-  border-left-color: var(--accent-color);
+  color: var(--accent-hover);
+  /* Darker blue */
+  border-left-color: var(--accent-hover);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  /* Subtle shadow */
+  font-weight: 600;
 }
 
 .sidebar-footer {
