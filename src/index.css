@@ -77,6 +77,14 @@ button {
   padding: 0 1rem;
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
 .flex {
   display: flex;
 }
@@ -467,11 +475,17 @@ button {
   flex-shrink: 0;
 }
 
+.messages-list h3 {
+  padding-left: 10px;
+}
+
 .user-list-item {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
+  padding-left: 26px;
+  /* 16px (1rem) + 10px extra */
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 1px solid rgba(255, 255, 255, 0.02);
