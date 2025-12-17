@@ -9,6 +9,7 @@ import Messages from './pages/Messages';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
 import UserProfile from './pages/UserProfile';
+import Search from './pages/Search';
 import CreatePost from './pages/CreatePost';
 import Loader from './components/Loader';
 
@@ -34,6 +35,7 @@ function AppRoutes() {
         <Route path="/messages" element={<Messages />} />
         <Route path="/messages/:userId" element={<Messages />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/users/:userId" element={<UserProfile />} />
       </Route>
