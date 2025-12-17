@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import API from '../api';
 import { useAuth } from '../context/AuthContext';
 import { formatDistanceToNow } from 'date-fns';
-import { FaHeart, FaRegHeart, FaComment, FaPaperPlane, FaGlobe } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaComment, FaPaperPlane, FaGlobe, FaEdit, FaTrash, FaTimes, FaCheck } from 'react-icons/fa';
 import Avatar from './Avatar';
 const PostCard = ({ post: initialPost }) => {
     const { user } = useAuth();
@@ -14,6 +14,37 @@ const PostCard = ({ post: initialPost }) => {
     const [showComments, setShowComments] = useState(false);
     const [newComment, setNewComment] = useState('');
     const [loadingComments, setLoadingComments] = useState(false);
+
+    // Edit/Delete State
+    const [isEditing, setIsEditing] = useState(false);
+    const [editContent, setEditContent] = useState(post.content);
+
+    const isOwner = user?.id === post.userId;
+    const isAdmin = user?.isAdmin; // Assuming isAdmin property exists
+
+    const handleUpdate = async () => {
+        if (!editContent.trim()) return;
+        try {
+            const { data } = await API.put(`/posts/${post.id}`, { content: editContent });
+            setPost({ ...post, content: data.content }); // Update local state
+            setIsEditing(false);
+        } catch (err) {
+            console.error("Update failed", err);
+            alert("Failed to update post");
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!window.confirm("Are you sure you want to delete this post?")) return;
+        try {
+            await API.delete(`/posts/${post.id}`);
+            // Notify parent to remove post from list
+            if (initialPost.onDelete) initialPost.onDelete(post.id);
+        } catch (err) {
+            console.error("Delete failed", err);
+            alert("Failed to delete post");
+        }
+    };
 
     // Translation State
     const [translatedText, setTranslatedText] = useState('');
@@ -82,7 +113,7 @@ const PostCard = ({ post: initialPost }) => {
 
     return (
         <div className="card">
-            <div className="post-header">
+            <div className="post-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div className="flex items-center gap-4">
                     <Avatar src={post.User.avatar} name={post.User.displayName} userId={post.User.id} />
                     <div>
@@ -94,9 +125,43 @@ const PostCard = ({ post: initialPost }) => {
                         </span>
                     </div>
                 </div>
+
+                {/* Edit/Delete Actions */}
+                {(isOwner || isAdmin) && (
+                    <div className="flex gap-2">
+                        {!isEditing ? (
+                            <>
+                                <button onClick={() => setIsEditing(true)} className="btn-icon" title="Edit Post">
+                                    <FaEdit size={14} />
+                                </button>
+                                <button onClick={handleDelete} className="btn-icon" title="Delete Post" style={{ color: 'var(--error-color)' }}>
+                                    <FaTrash size={14} />
+                                </button>
+                            </>
+                        ) : (
+                            <div className="flex gap-2">
+                                <button onClick={handleUpdate} className="btn-icon" title="Save" style={{ color: 'var(--accent-color)' }}>
+                                    <FaCheck size={14} />
+                                </button>
+                                <button onClick={() => setIsEditing(false)} className="btn-icon" title="Cancel">
+                                    <FaTimes size={14} />
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
 
-            <p style={{ marginBottom: post.image ? '1rem' : '0', whiteSpace: 'pre-wrap' }}>{post.content}</p>
+            {isEditing ? (
+                <textarea
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    className="input"
+                    style={{ marginBottom: '1rem', minHeight: '100px', width: '100%', resize: 'vertical' }}
+                />
+            ) : (
+                <p style={{ marginBottom: post.image ? '1rem' : '0', whiteSpace: 'pre-wrap' }}>{post.content}</p>
+            )}
 
             {translatedText && (
                 <div style={{ marginTop: '0.5rem', padding: '0.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', borderLeft: '3px solid var(--accent-color)' }}>

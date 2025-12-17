@@ -47,7 +47,10 @@ const Feed = () => {
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {posts.map((post) => (
-                            <PostCard key={post.id} post={post} />
+                            <PostCard
+                                key={post.id}
+                                post={{ ...post, onDelete: (id) => setPosts(posts.filter(p => p.id !== id)) }}
+                            />
                         ))}
                     </div>
                 )
