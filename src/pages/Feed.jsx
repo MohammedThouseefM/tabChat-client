@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import API from '../api';
 import { FaPlus } from 'react-icons/fa';
 import PostCard from '../components/PostCard';
+import Loader from '../components/Loader';
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
@@ -42,7 +43,7 @@ const Feed = () => {
             {/* Feed */}
             {
                 loading ? (
-                    <p>Loading posts...</p>
+                    <Loader fullScreen={false} />
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {posts.map((post) => (

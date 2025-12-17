@@ -3,6 +3,7 @@ import API from '../api';
 import { useAuth } from '../context/AuthContext';
 import { FaPaperPlane, FaGlobe, FaList, FaBolt, FaExclamationTriangle, FaMagic } from 'react-icons/fa';
 import Avatar from '../components/Avatar';
+import Loader from '../components/Loader';
 
 const Messages = () => {
     const { user: currentUser } = useAuth();
@@ -210,6 +211,10 @@ const Messages = () => {
         const date = new Date(dateStr);
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     };
+
+    if (loading) {
+        return <Loader fullScreen={false} />;
+    }
 
     return (
         <div className={`messages-container ${showMobileChat ? 'messages-mobile-view-chat' : 'messages-mobile-view-list'}`}>

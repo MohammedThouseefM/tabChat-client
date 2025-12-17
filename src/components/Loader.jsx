@@ -1,9 +1,9 @@
 import React from 'react';
 import reactLogo from '../assets/react.svg';
 
-const Loader = () => {
+const Loader = ({ fullScreen = true }) => {
     return (
-        <div className="loader-container">
+        <div className={`loader-container ${fullScreen ? 'fixed' : 'block'}`}>
             <div className="loader-content">
                 {/* Use specific logo if available, falling back to React logo */}
                 <img src="/logo.png" alt="Loading..." className="loader-logo"
