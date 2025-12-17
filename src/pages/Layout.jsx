@@ -32,9 +32,6 @@ const Layout = () => {
                     <NavLink to="/messages" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <FaEnvelope /> <span>Messages</span>
                     </NavLink>
-                    <NavLink to="/notifications" className={({ isActive }) => (isActive ? 'active' : '')}>
-                        <FaBell /> <span>Notifications</span>
-                    </NavLink>
                     <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <FaUser /> <span>Profile</span>
                     </NavLink>
