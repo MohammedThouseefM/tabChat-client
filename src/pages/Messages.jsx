@@ -208,8 +208,9 @@ const Messages = () => {
                                 disabled={aiProcessing}
                                 className="btn btn-ghost"
                                 style={{ border: '1px solid var(--border-color)' }}
+                                title={aiProcessing ? 'Summarizing...' : 'Summarize Chat'}
                             >
-                                <FaList /> {aiProcessing ? 'Summarizing...' : 'Summarize Chat'}
+                                <FaList /> <span className="hidden-mobile">{aiProcessing ? 'Summarizing...' : 'Summarize Chat'}</span>
                             </button>
                         </div>
 
@@ -263,7 +264,7 @@ const Messages = () => {
 
                         {/* Smart Replies */}
                         {smartReplies.length > 0 && (
-                            <div style={{ padding: '0 1rem 0.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                            <div className="flex flex-wrap gap-2 p-2 px-4 pb-2">
                                 {smartReplies.map((reply, i) => (
                                     <button
                                         key={i}

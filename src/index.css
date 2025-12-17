@@ -117,6 +117,10 @@ button {
   margin-bottom: 1rem;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .w-full {
   width: 100%;
 }
