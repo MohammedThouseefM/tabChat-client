@@ -431,41 +431,187 @@ button {
     margin-left: 0;
     padding: 1rem;
     margin-bottom: 70px;
-    /* Space for bottom nav */
     max-width: 100%;
   }
+}
 
-  /* Messages Mobile View */
+
+/* ----------------------------------------------------
+   MESSAGES REDESIGN
+   Premium Split-Layout Implementation
+---------------------------------------------------- */
+
+.messages-container {
+  display: flex;
+  height: calc(100vh - 60px);
+  /* Full height minus header */
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-color);
+}
+
+/* --- Left Side: Users List --- */
+.messages-list {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(30, 41, 59, 0.7);
+  /* Translucent slate */
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.user-list-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-list-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.user-list-item.active {
+  background: rgba(59, 130, 246, 0.15);
+  /* Active blue tint */
+}
+
+/* Active indicator bar */
+.user-list-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* --- Right Side: Chat Window --- */
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.05) 0px, transparent 50%);
+  background-color: var(--bg-color);
+  position: relative;
+}
+
+.chat-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.chat-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* --- Messages Area --- */
+.message-bubble {
+  max-width: 75%;
+  padding: 0.85rem 1.25rem;
+  position: relative;
+  word-break: break-word;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-bubble.me {
+  align-self: flex-end;
+  /* Gradient for Sent messages */
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+  color: white;
+  border-radius: 18px 18px 4px 18px;
+}
+
+.message-bubble.them {
+  align-self: flex-start;
+  background: #334155;
+  /* Slate 700 */
+  color: #e2e8f0;
+  border-radius: 18px 18px 18px 4px;
+}
+
+/* --- Hover Actions for Message --- */
+.message-bubble .message-actions {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.message-bubble:hover .message-actions {
+  opacity: 1;
+}
+
+/* --- Input Area --- */
+.chat-input-area {
+  padding: 1.5rem;
+  /* Clean, floating input look */
+}
+
+.chat-input-wrapper {
+  background: var(--input-bg);
+  border-radius: 24px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+}
+
+.chat-input-wrapper:focus-within {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+
+/* --- Mobile Responsiveness for Messages --- */
+@media (max-width: 768px) {
   .messages-container {
-    height: calc(100vh - 140px);
-    /* Adjust for bottom nav and headers */
+    height: calc(100vh - 130px);
+    /* Adjust for header/nav */
     position: relative;
   }
 
   .messages-list {
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
+    position: absolute;
     z-index: 10;
     background: var(--bg-color);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .chat-window {
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
+    position: absolute;
     z-index: 20;
     background: var(--bg-color);
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Classes to control visibility state via JS toggling classes or styles */
+  /* Toggling Logic */
   .messages-mobile-view-list .messages-list {
     transform: translateX(0);
   }
@@ -475,8 +621,9 @@ button {
   }
 
   .messages-mobile-view-chat .messages-list {
-    transform: translateX(-100%);
-    /* Optional: slide out */
+    transform: translateX(-20%);
+    /* Subtle parallax effect */
+    opacity: 0.5;
   }
 
   .messages-mobile-view-chat .chat-window {

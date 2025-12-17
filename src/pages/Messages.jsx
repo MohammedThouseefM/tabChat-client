@@ -172,9 +172,11 @@ const Messages = () => {
     return (
         <div className={`messages-container ${showMobileChat ? 'messages-mobile-view-chat' : 'messages-mobile-view-list'}`}>
             {/* Users List */}
-            <div className="card messages-list">
-                <h3 className="mb-4">Messages</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div className="messages-list">
+                <div className="p-4 border-b border-[var(--border-color)]">
+                    <h3 className="font-bold text-lg">Messages</h3>
+                </div>
+                <div className="p-2 flex flex-col gap-1 overflow-y-auto custom-scrollbar">
                     {users.map((u) => (
                         <div
                             key={u.id}
@@ -189,7 +191,7 @@ const Messages = () => {
             </div>
 
             {/* Chat Window */}
-            <div className="card chat-window">
+            <div className="chat-window">
                 {selectedUser ? (
                     <>
                         {/* Header */}
