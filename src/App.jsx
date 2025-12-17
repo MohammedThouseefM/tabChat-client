@@ -10,6 +10,8 @@ import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
 import UserProfile from './pages/UserProfile';
 
+import CreatePost from './pages/CreatePost';
+
 // Protected Route Wrapper
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -25,6 +27,7 @@ function AppRoutes() {
       <Route path="/register" element={<Register />} />
       <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
         <Route path="/feed" element={<Feed />} />
+        <Route path="/create-post" element={<CreatePost />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/messages/:userId" element={<Messages />} />
         <Route path="/notifications" element={<Notifications />} />
