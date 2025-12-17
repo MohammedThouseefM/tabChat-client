@@ -6,7 +6,12 @@ import Avatar from '../components/Avatar';
 
 const Messages = () => {
     const { user: currentUser } = useAuth();
-    const [users, setUsers] = useState([]);
+
+    // New State for Split View
+    const [chats, setChats] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -21,20 +26,40 @@ const Messages = () => {
 
     const [showMobileChat, setShowMobileChat] = useState(false);
 
-    // Fetch Users (Unchanged)
+    // Fetch Chats and Suggestions
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchData = async () => {
+            setLoading(true);
             try {
-                const { data } = await API.get('/users');
-                setUsers(data);
+                // Fetch active conversations
+                const chatsRes = await API.get('/messages/conversations');
+                setChats(chatsRes.data);
+
+                // Fetch suggestions
+                const suggestionsRes = await API.get('/users/suggestions');
+                setSuggestions(suggestionsRes.data);
             } catch (err) {
-                console.error(err);
+                console.error("Failed to load messages data", err);
+            } finally {
+                setLoading(false);
             }
         };
-        fetchUsers();
+        fetchData();
+
+        // Poll for new chats/updates every 10s
+        const interval = setInterval(async () => {
+            try {
+                const chatsRes = await API.get('/messages/conversations');
+                setChats(chatsRes.data);
+            } catch (err) {
+                // Silent fail for polling
+            }
+        }, 10000);
+
+        return () => clearInterval(interval);
     }, []);
 
-    // Fetch Messages & Smart Replies (Unchanged logic, added showMobileChat effect)
+    // Fetch Messages & Smart Replies when user is selected
     useEffect(() => {
         if (!selectedUser) return;
 
@@ -161,6 +186,16 @@ const Messages = () => {
             setNewMessage('');
             setSmartReplies([]);
             scrollToBottom();
+
+            // Refresh conversation list to show latest message or move new chat to top
+            try {
+                const chatsRes = await API.get('/messages/conversations');
+                setChats(chatsRes.data);
+                const suggestionsRes = await API.get('/users/suggestions');
+                setSuggestions(suggestionsRes.data);
+            } catch (e) {
+                // Ignore refresh errors
+            }
         } catch (err) {
             console.error(err);
             alert("Failed to send message. Please try again.");
@@ -169,24 +204,90 @@ const Messages = () => {
         }
     };
 
+    // Helper to format time
+    const formatTime = (dateStr) => {
+        if (!dateStr) return '';
+        const date = new Date(dateStr);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
     return (
         <div className={`messages-container ${showMobileChat ? 'messages-mobile-view-chat' : 'messages-mobile-view-list'}`}>
-            {/* Users List */}
+            {/* Users List Sidebar */}
             <div className="messages-list">
                 <div className="p-4 border-b border-[var(--border-color)]">
                     <h3 className="font-bold text-lg">Messages</h3>
                 </div>
-                <div className="p-2 flex flex-col gap-1 overflow-y-auto custom-scrollbar">
-                    {users.map((u) => (
-                        <div
-                            key={u.id}
-                            onClick={() => setSelectedUser(u)}
-                            className={`user-list-item ${selectedUser?.id === u.id ? 'active' : ''}`}
-                        >
-                            <Avatar src={u.avatar} name={u.displayName} />
-                            <span style={{ fontWeight: '500' }}>{u.displayName}</span>
+
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                    {/* Active Chats Section */}
+                    {chats.length > 0 && (
+                        <div className="mb-4">
+                            <h4 className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2 px-2">
+                                Chats
+                            </h4>
+                            <div className="flex flex-col gap-1">
+                                {chats.map((chat) => (
+                                    <div
+                                        key={chat.user.id}
+                                        onClick={() => setSelectedUser(chat.user)}
+                                        className={`user-list-item ${selectedUser?.id === chat.user.id ? 'active' : ''}`}
+                                    >
+                                        <div className="relative">
+                                            <Avatar src={chat.user.avatar} name={chat.user.displayName} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex justify-between items-baseline">
+                                                <span className="font-medium truncate">{chat.user.displayName}</span>
+                                                {chat.lastMessage && (
+                                                    <span className="text-xs text-[var(--text-secondary)]">
+                                                        {formatTime(chat.lastMessage.createdAt)}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            {chat.lastMessage && (
+                                                <p className="text-sm text-[var(--text-secondary)] truncate">
+                                                    {chat.lastMessage.senderId === currentUser.id ? 'You: ' : ''}
+                                                    {chat.lastMessage.content}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    ))}
+                    )}
+
+                    {/* Suggested Users Section */}
+                    <div className="mb-4">
+                        <h4 className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2 px-2">
+                            Suggested
+                        </h4>
+                        {suggestions.length > 0 ? (
+                            <div className="flex flex-col gap-1">
+                                {suggestions.map((u) => (
+                                    <div
+                                        key={u.id}
+                                        onClick={() => setSelectedUser(u)}
+                                        className={`user-list-item ${selectedUser?.id === u.id ? 'active' : ''}`}
+                                    >
+                                        <div className="relative">
+                                            <Avatar src={u.avatar} name={u.displayName} />
+                                            <div className="absolute -bottom-1 -right-1 bg-[var(--accent-color)] text-[var(--bg-primary)] rounded-full p-0.5" title="New Suggestion">
+                                                <FaMagic size={8} />
+                                            </div>
+                                        </div>
+                                        <div className="flex-1">
+                                            <span className="font-medium">{u.displayName}</span>
+                                            <p className="text-xs text-[var(--text-secondary)]">Start a new chat</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-sm text-[var(--text-secondary)] px-2">No new suggestions.</p>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -304,7 +405,7 @@ const Messages = () => {
                     </>
                 ) : (
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
-                        Select a user to start messaging
+                        Select a chat or a suggested user to start messaging
                     </div>
                 )}
             </div>
