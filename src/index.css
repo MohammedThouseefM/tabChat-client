@@ -495,6 +495,8 @@ button {
   backdrop-filter: blur(10px);
   border-right: 1px solid var(--border-color);
   flex-shrink: 0;
+  min-height: 0;
+  /* Important for child scrolling */
 }
 
 .messages-list h3 {
@@ -933,4 +935,22 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
