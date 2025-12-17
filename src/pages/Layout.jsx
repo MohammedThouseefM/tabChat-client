@@ -4,6 +4,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FaHome, FaEnvelope, FaSignOutAlt, FaUser, FaBell } from 'react-icons/fa';
 import Avatar from '../components/Avatar';
+import Header from '../components/Header';
 
 const Layout = () => {
     const { user, logout } = useAuth();
@@ -12,6 +13,7 @@ const Layout = () => {
 
     return (
         <div className="app-layout">
+            <Header />
             <aside className="sidebar">
                 <div className="sidebar-header">
                     <Avatar src={user.avatar} name={user.displayName} size="50px" />
