@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FaHome, FaEnvelope, FaSignOutAlt, FaUser, FaBell, FaPlusSquare } from 'react-icons/fa';
 import Avatar from '../components/Avatar';
@@ -8,6 +8,8 @@ import Header from '../components/Header';
 
 const Layout = () => {
     const { user, logout } = useAuth();
+    const location = useLocation();
+    const isMessagesPage = location.pathname.startsWith('/messages');
 
     if (!user) return null;
 
@@ -56,7 +58,7 @@ const Layout = () => {
                 </div>
             </aside>
 
-            <main className="main-content">
+            <main className={`main-content ${isMessagesPage ? 'no-padding' : ''}`}>
                 <Outlet />
             </main>
         </div>
