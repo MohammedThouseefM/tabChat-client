@@ -2,7 +2,7 @@
 import React from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaHome, FaEnvelope, FaSignOutAlt, FaUser, FaBell, FaPlusSquare } from 'react-icons/fa';
+import { FaHome, FaEnvelope, FaSignOutAlt, FaUser, FaBell, FaPlusSquare, FaSearch } from 'react-icons/fa';
 import Avatar from '../components/Avatar';
 import Header from '../components/Header';
 
@@ -27,10 +27,10 @@ const Layout = () => {
                         <FaHome /> <span>Feed</span>
                     </NavLink>
                     <NavLink to="/create-post" className={({ isActive }) => (isActive ? 'active' : '')}>
-                        <FaPlusSquare /> <span>Add Post</span>
+                        <FaPlusSquare /> <span>Post</span>
                     </NavLink>
                     <NavLink to="/messages" className={({ isActive }) => (isActive ? 'active' : '')}>
-                        <FaEnvelope /> <span>Messages</span>
+                        <FaEnvelope /> <span>Message</span>
                     </NavLink>
                     <NavLink to="/search" className={({ isActive }) => (isActive ? 'active' : '')}>
                         <FaSearch /> <span>Search</span>
