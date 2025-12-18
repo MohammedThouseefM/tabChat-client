@@ -573,6 +573,8 @@ button {
   flex-shrink: 0;
   min-height: 0;
   /* Important for child scrolling */
+  height: 100%;
+  overflow: hidden;
 }
 
 .messages-list h3 {
@@ -1042,10 +1044,10 @@ button {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.3);
 }
