@@ -70,6 +70,14 @@ const Messages = () => {
         setSmartReplies([]);
         setShowMobileChat(true); // Show chat on mobile when user is selected
 
+        // Mark as read immediately
+        API.put(`/api/messages/read/${selectedUser.id}`).catch(err => console.error("Failed to mark read", err));
+
+        // Optimistically update unread count in chat list
+        setChats(prev => prev.map(c =>
+            c.user.id === selectedUser.id ? { ...c, unreadCount: 0 } : c
+        ));
+
         const fetchMessages = async () => {
             try {
                 const { data } = await API.get(`/messages/${selectedUser.id}`);
@@ -236,26 +244,44 @@ const Messages = () => {
                                     <div
                                         key={chat.user.id}
                                         onClick={() => setSelectedUser(chat.user)}
-                                        className={`user-list-item ${selectedUser?.id === chat.user.id ? 'active' : ''}`}
+                                        className={`user-list-item ${selectedUser?.id === chat.user.id ? 'active' : ''} ${chat.unreadCount > 0 ? 'bg-gray-800/50' : ''}`}
+                                        style={chat.unreadCount > 0 ? { borderLeft: '4px solid var(--accent-color)', backgroundColor: 'rgba(255,255,255,0.05)' } : {}}
                                     >
                                         <div className="relative">
                                             <Avatar src={chat.user.avatar} name={chat.user.displayName} />
+                                            {/* Online Status (Mock) */}
+                                            {/* <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div> */}
                                         </div>
-                                        <div className="user-info">
+                                        <div className="user-info" style={{ flex: 1 }}>
                                             <div className="top-row">
-                                                <h4 title={chat.user.displayName}>{chat.user.displayName}</h4>
+                                                <h4
+                                                    title={chat.user.displayName}
+                                                    className={chat.unreadCount > 0 ? 'font-bold text-white' : ''}
+                                                >
+                                                    {chat.user.displayName}
+                                                </h4>
                                                 {chat.lastMessage && (
-                                                    <span className="time">
+                                                    <span className={`time ${chat.unreadCount > 0 ? 'text-green-400 font-bold' : ''}`}>
                                                         {formatTime(chat.lastMessage.createdAt)}
                                                     </span>
                                                 )}
                                             </div>
-                                            {chat.lastMessage && (
-                                                <p title={chat.lastMessage.content}>
-                                                    {chat.lastMessage.senderId === currentUser.id ? 'You: ' : ''}
-                                                    {chat.lastMessage.content}
-                                                </p>
-                                            )}
+                                            <div className="flex justify-between items-center">
+                                                {chat.lastMessage && (
+                                                    <p
+                                                        title={chat.lastMessage.content}
+                                                        className={chat.unreadCount > 0 ? 'font-bold text-gray-200' : 'text-gray-400'}
+                                                    >
+                                                        {chat.lastMessage.senderId === currentUser.id ? 'You: ' : ''}
+                                                        {chat.lastMessage.content}
+                                                    </p>
+                                                )}
+                                                {chat.unreadCount > 0 && (
+                                                    <span className="ml-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                                                        {chat.unreadCount}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
