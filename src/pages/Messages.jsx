@@ -291,127 +291,128 @@ const Messages = () => {
                         )}
                     </div>
                 </div>
-
-                {/* Chat Window */}
-                <div className="chat-window">
-                    {selectedUser ? (
-                        <>
-                            {/* Header */}
-                            <div className="chat-header">
-                                <div className="flex items-center gap-4">
-                                    <button className="btn-icon md:hidden hidden-desktop" onClick={() => setShowMobileChat(false)}>
-                                        Back
-                                    </button>
-                                    <Avatar src={selectedUser.avatar} name={selectedUser.displayName} />
-                                    <h3>{selectedUser.displayName}</h3>
-                                </div>
-                                <button
-                                    onClick={handleSummarize}
-                                    disabled={aiProcessing}
-                                    className="btn btn-ghost"
-                                    style={{ border: '1px solid var(--border-color)' }}
-                                    title={aiProcessing ? 'Summarizing...' : 'Summarize Chat'}
-                                >
-                                    <FaList /> <span className="hidden-mobile">{aiProcessing ? 'Summarizing...' : 'Summarize Chat'}</span>
-                                </button>
-                            </div>
-
-                            {/* Summary Modal (Inline) */}
-                            {showSummary && (
-                                <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', margin: '1rem', borderRadius: '8px', borderLeft: '4px solid var(--accent-color)' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                                        <h4 style={{ color: 'var(--accent-color)', margin: 0 }}>Chat Summary</h4>
-                                        <button onClick={() => setShowSummary(false)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}>✕</button>
-                                    </div>
-                                    <p style={{ whiteSpace: 'pre-line', fontSize: '0.9rem' }}>{summary}</p>
-                                </div>
-                            )}
-
-                            {/* Messages Area */}
-                            <div className="chat-messages-area">
-                                {messages.map((msg) => {
-                                    const isMe = msg.senderId === currentUser.id;
-                                    return (
-                                        <div
-                                            key={msg.id}
-                                            className={`message-bubble ${isMe ? 'me' : 'them'} group`}
-                                        >
-                                            {msg.content}
-
-                                            {!isMe && (
-                                                <button
-                                                    onClick={() => handleTranslate(msg)}
-                                                    style={{
-                                                        position: 'absolute',
-                                                        right: '-2rem',
-                                                        top: '50%',
-                                                        transform: 'translateY(-50%)',
-                                                        background: 'none',
-                                                        border: 'none',
-                                                        color: 'var(--text-secondary)',
-                                                        cursor: 'pointer',
-                                                        opacity: 0.5
-                                                    }}
-                                                    title="Translate"
-                                                >
-                                                    <FaGlobe className={translatingMsgId === msg.id ? 'animate-spin' : ''} />
-                                                </button>
-                                            )}
-                                            {msg.translated && <div style={{ fontSize: '0.7rem', opacity: 0.7, marginTop: '4px' }}>(Translated)</div>}
-                                        </div>
-                                    );
-                                })}
-                                <div ref={messagesEndRef} />
-                            </div>
-
-                            {/* Smart Replies */}
-                            {smartReplies.length > 0 && (
-                                <div className="flex flex-wrap gap-2 p-2 px-4 pb-2">
-                                    {smartReplies.map((reply, i) => (
-                                        <button
-                                            key={i}
-                                            onClick={() => setNewMessage(reply)}
-                                            className="btn btn-ghost"
-                                            style={{
-                                                borderRadius: '20px',
-                                                border: '1px solid var(--border-color)',
-                                                fontSize: '0.85rem',
-                                                padding: '0.25rem 0.75rem'
-                                            }}
-                                        >
-                                            <FaBolt size={10} color="#eab308" /> {reply}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-
-                            {/* Input Area */}
-                            <form onSubmit={handleSend} className="chat-input-area">
-                                <input
-                                    type="text"
-                                    value={newMessage}
-                                    onChange={(e) => setNewMessage(e.target.value)}
-                                    placeholder="Type a message..."
-                                    className="input"
-                                />
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    style={{ padding: '0.75rem', opacity: isSending ? 0.7 : 1, cursor: isSending ? 'wait' : 'pointer' }}
-                                    disabled={isSending}
-                                >
-                                    <FaPaperPlane />
-                                </button>
-                            </form>
-                        </>
-                    ) : (
-                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
-                            Select a chat or a suggested user to start messaging
-                        </div>
-                    )}
-                </div>
             </div>
-            );
+
+            {/* Chat Window */}
+            <div className="chat-window">
+                {selectedUser ? (
+                    <>
+                        {/* Header */}
+                        <div className="chat-header">
+                            <div className="flex items-center gap-4">
+                                <button className="btn-icon md:hidden hidden-desktop" onClick={() => setShowMobileChat(false)}>
+                                    Back
+                                </button>
+                                <Avatar src={selectedUser.avatar} name={selectedUser.displayName} />
+                                <h3>{selectedUser.displayName}</h3>
+                            </div>
+                            <button
+                                onClick={handleSummarize}
+                                disabled={aiProcessing}
+                                className="btn btn-ghost"
+                                style={{ border: '1px solid var(--border-color)' }}
+                                title={aiProcessing ? 'Summarizing...' : 'Summarize Chat'}
+                            >
+                                <FaList /> <span className="hidden-mobile">{aiProcessing ? 'Summarizing...' : 'Summarize Chat'}</span>
+                            </button>
+                        </div>
+
+                        {/* Summary Modal (Inline) */}
+                        {showSummary && (
+                            <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', margin: '1rem', borderRadius: '8px', borderLeft: '4px solid var(--accent-color)' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                                    <h4 style={{ color: 'var(--accent-color)', margin: 0 }}>Chat Summary</h4>
+                                    <button onClick={() => setShowSummary(false)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}>✕</button>
+                                </div>
+                                <p style={{ whiteSpace: 'pre-line', fontSize: '0.9rem' }}>{summary}</p>
+                            </div>
+                        )}
+
+                        {/* Messages Area */}
+                        <div className="chat-messages-area">
+                            {messages.map((msg) => {
+                                const isMe = msg.senderId === currentUser.id;
+                                return (
+                                    <div
+                                        key={msg.id}
+                                        className={`message-bubble ${isMe ? 'me' : 'them'} group`}
+                                    >
+                                        {msg.content}
+
+                                        {!isMe && (
+                                            <button
+                                                onClick={() => handleTranslate(msg)}
+                                                style={{
+                                                    position: 'absolute',
+                                                    right: '-2rem',
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    color: 'var(--text-secondary)',
+                                                    cursor: 'pointer',
+                                                    opacity: 0.5
+                                                }}
+                                                title="Translate"
+                                            >
+                                                <FaGlobe className={translatingMsgId === msg.id ? 'animate-spin' : ''} />
+                                            </button>
+                                        )}
+                                        {msg.translated && <div style={{ fontSize: '0.7rem', opacity: 0.7, marginTop: '4px' }}>(Translated)</div>}
+                                    </div>
+                                );
+                            })}
+                            <div ref={messagesEndRef} />
+                        </div>
+
+                        {/* Smart Replies */}
+                        {smartReplies.length > 0 && (
+                            <div className="flex flex-wrap gap-2 p-2 px-4 pb-2">
+                                {smartReplies.map((reply, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => setNewMessage(reply)}
+                                        className="btn btn-ghost"
+                                        style={{
+                                            borderRadius: '20px',
+                                            border: '1px solid var(--border-color)',
+                                            fontSize: '0.85rem',
+                                            padding: '0.25rem 0.75rem'
+                                        }}
+                                    >
+                                        <FaBolt size={10} color="#eab308" /> {reply}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Input Area */}
+                        <form onSubmit={handleSend} className="chat-input-area">
+                            <input
+                                type="text"
+                                value={newMessage}
+                                onChange={(e) => setNewMessage(e.target.value)}
+                                placeholder="Type a message..."
+                                className="input"
+                            />
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                style={{ padding: '0.75rem', opacity: isSending ? 0.7 : 1, cursor: isSending ? 'wait' : 'pointer' }}
+                                disabled={isSending}
+                            >
+                                <FaPaperPlane />
+                            </button>
+                        </form>
+                    </>
+                ) : (
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
+                        Select a chat or a suggested user to start messaging
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 };
 
-            export default Messages;
+export default Messages;
