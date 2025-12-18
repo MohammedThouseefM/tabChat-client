@@ -54,6 +54,7 @@ const AdminDashboard = () => {
 };
 
 const ActivityFeed = ({ user }) => {
+    const [activity, setActivity] = useState({ posts: [], messages: [] });
     const [suspicious, setSuspicious] = useState({ posts: [], messages: [] });
 
     useEffect(() => {
