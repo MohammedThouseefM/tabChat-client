@@ -78,17 +78,27 @@ const Messages = () => {
             c.user.id === selectedUser.id ? { ...c, unreadCount: 0 } : c
         ));
 
+        let lastMessageId = null;
+
         const fetchMessages = async () => {
             try {
                 const { data } = await API.get(`/messages/${selectedUser.id}`);
                 setMessages(data);
-                scrollToBottom();
 
-                // Fetch Smart Replies if last message is from other user
-                if (data.length > 0 && data[data.length - 1].senderId !== currentUser.id) {
-                    loadSmartReplies(data);
-                } else {
-                    setSmartReplies([]);
+                // Only scroll if new message (simple check) or first load
+                if (data.length > 0) {
+                    const latestMsg = data[data.length - 1];
+                    if (latestMsg.id !== lastMessageId) {
+                        scrollToBottom();
+                        lastMessageId = latestMsg.id;
+
+                        // Fetch Smart Replies ONLY if the new last message is from other user
+                        if (latestMsg.senderId !== currentUser.id) {
+                            loadSmartReplies(data);
+                        } else {
+                            setSmartReplies([]);
+                        }
+                    }
                 }
             } catch (err) {
                 console.error(err);
