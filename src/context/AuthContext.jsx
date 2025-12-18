@@ -77,6 +77,21 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const loginAsAdmin = async (email, password) => {
+        try {
+            const baseURL = import.meta.env.VITE_API_URL || 'https://server-kyf8.onrender.com';
+            const { data } = await API.post('/api/admin/login', { email, password }, { baseURL });
+            if (data.role !== 'admin') {
+                return { success: false, message: 'Access denied: Not an admin' };
+            }
+            setUser(data);
+            localStorage.setItem('user', JSON.stringify(data));
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || 'Admin login failed' };
+        }
+    };
+
     const logout = () => {
         localStorage.removeItem('user');
         setUser(null);
@@ -88,7 +103,9 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         loginWithEmail,
+        loginWithEmail,
         registerWithEmail,
+        loginAsAdmin,
         logout,
     };
 

@@ -11,6 +11,11 @@ import Profile from './pages/Profile';
 import UserProfile from './pages/UserProfile';
 import Search from './pages/Search';
 import CreatePost from './pages/CreatePost';
+import AdminLogin from './pages/AdminLogin';
+import AdminLayout from './components/AdminLayout';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminUsers from './pages/AdminUsers';
+import AdminUserDetails from './pages/AdminUserDetails';
 import Loader from './components/Loader';
 
 // Protected Route Wrapper (Inline definition restored)
@@ -38,6 +43,14 @@ function AppRoutes() {
         <Route path="/search" element={<Search />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/users/:userId" element={<UserProfile />} />
+      </Route>
+
+      {/* Admin Routes */}
+      <Route path="/useradmin43176" element={<AdminLogin />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="users/:userId" element={<AdminUserDetails />} />
       </Route>
     </Routes>
   );
