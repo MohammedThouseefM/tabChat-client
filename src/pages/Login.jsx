@@ -28,57 +28,55 @@ const Login = () => {
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div className="flex items-center justify-center" style={{ height: '100vh' }}>
-            <div className="card auth-card flex flex-col items-center">
-                <h1 style={{ marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Welcome Back</h1>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Sign in to connect with friends</p>
+        <div className="auth-page">
+            <div className="auth-card">
+                <h2>Welcome Back</h2>
+                <p className="text-center font-normal mb-8" style={{ color: 'var(--text-secondary)' }}>Sign in to connect with friends</p>
 
-                {error && <div className="alert alert-error w-full">{error}</div>}
+                {error && <div className="alert alert-error w-full mb-4">{error}</div>}
 
-                <form onSubmit={handleSubmit} className="w-full mb-4">
-                    <div className="form-group">
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
                         <label className="label">Email</label>
                         <input
                             type="email"
-                            className="input"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             placeholder="Enter your email"
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="mb-4">
                         <label className="label">Password</label>
                         <input
                             type="password"
-                            className="input"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             placeholder="Enter your password"
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary w-full">
+                    <button type="submit">
                         Log In
                     </button>
                 </form>
 
-                <div className="flex items-center w-full my-4" style={{ margin: '1.5rem 0' }}>
+                <div className="flex items-center w-full my-6">
                     <div style={{ flex: 1, borderBottom: '1px solid var(--border-color)' }}></div>
-                    <span style={{ padding: '0 10px', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>OR</span>
+                    <span style={{ padding: '0 10px', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>OR</span>
                     <div style={{ flex: 1, borderBottom: '1px solid var(--border-color)' }}></div>
                 </div>
 
                 <button
                     onClick={login}
-                    className="btn btn-secondary w-full"
+                    className="btn btn-secondary w-full flex justify-center items-center gap-2"
                 >
                     <FaGoogle /> Sign in with Google
                 </button>
 
-                <p style={{ marginTop: '1.5rem', color: 'var(--text-secondary)' }}>
-                    Don't have an account? <a href="/register" style={{ color: 'var(--accent-color)', fontWeight: '600' }}>Sign up</a>
-                </p>
+                <div className="auth-link">
+                    Don't have an account? <a href="/register">Sign up</a>
+                </div>
             </div>
         </div>
     );
