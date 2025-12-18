@@ -605,6 +605,18 @@ button {
 }
 
 /* --- Messages Area --- */
+.chat-messages-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* Use custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--input-bg) transparent;
+}
+
 .message-bubble {
   max-width: 75%;
   padding: 0.85rem 1.25rem;
@@ -643,8 +655,15 @@ button {
 
 /* --- Input Area --- */
 .chat-input-area {
-  padding: 1.5rem;
-  /* Clean, floating input look */
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 1rem;
+  background: var(--bg-color);
+  /* Ensure it has background so messages scroll behind */
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
 }
 
 .chat-input-wrapper {

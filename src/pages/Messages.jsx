@@ -328,7 +328,7 @@ const Messages = () => {
                             )}
 
                             {/* Messages Area */}
-                            <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <div className="chat-messages-area">
                                 {messages.map((msg) => {
                                     const isMe = msg.senderId === currentUser.id;
                                     return (
@@ -386,7 +386,7 @@ const Messages = () => {
                             )}
 
                             {/* Input Area */}
-                            <form onSubmit={handleSend} style={{ padding: '1rem', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '1rem' }}>
+                            <form onSubmit={handleSend} className="chat-input-area">
                                 <input
                                     type="text"
                                     value={newMessage}
