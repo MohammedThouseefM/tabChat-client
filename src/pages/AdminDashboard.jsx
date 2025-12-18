@@ -10,7 +10,7 @@ const AdminDashboard = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const { data } = await API.get('/api/admin/stats', {
+                const { data } = await API.get('/admin/stats', {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 setStats(data);
@@ -60,12 +60,12 @@ const ActivityFeed = ({ user }) => {
     useEffect(() => {
         const fetchActivity = async () => {
             try {
-                const activityRes = await API.get('/api/admin/activity', {
+                const activityRes = await API.get('/admin/activity', {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 setActivity(activityRes.data);
 
-                const suspiciousRes = await API.get('/api/admin/suspicious', {
+                const suspiciousRes = await API.get('/admin/suspicious', {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 setSuspicious(suspiciousRes.data);
@@ -79,7 +79,7 @@ const ActivityFeed = ({ user }) => {
     const deletePost = async (id) => {
         if (!window.confirm("Delete this post?")) return;
         try {
-            await API.delete(`/api/admin/posts/${id}`, {
+            await API.delete(`/admin/posts/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
             setActivity(prev => ({ ...prev, posts: prev.posts.filter(p => p.id !== id) }));
@@ -93,7 +93,7 @@ const ActivityFeed = ({ user }) => {
         const newContent = prompt("Edit post content:", post.content);
         if (newContent !== null && newContent !== post.content) {
             try {
-                await API.put(`/api/admin/posts/${post.id}`, { content: newContent }, {
+                await API.put(`/admin/posts/${post.id}`, { content: newContent }, {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 // Update local state
