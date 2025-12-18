@@ -95,24 +95,52 @@ const Search = () => {
     const hasResults = results.users.length > 0 || results.posts.length > 0 || results.messages.length > 0;
 
     return (
-        <div className="p-4 max-w-4xl mx-auto mb-20">
-            <h2 className="text-2xl font-bold mb-6">Search</h2>
+        <div style={{ padding: '1rem', maxWidth: '56rem', margin: '0 auto', marginBottom: '5rem' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>Search</h2>
 
             {/* Search Input */}
-            <div className="sticky top-0 bg-[var(--bg-color)] z-10 pb-4">
-                <div className="relative mb-4">
-                    <div className="flex items-center bg-[var(--input-bg)] rounded-xl px-4 py-3 border border-transparent focus-within:border-[var(--accent-color)] transition-all">
-                        <FaSearch className="text-[var(--text-secondary)] text-lg" />
+            <div style={{ position: 'sticky', top: 0, backgroundColor: 'var(--bg-color)', zIndex: 10, paddingBottom: '1rem' }}>
+                <div style={{ position: 'relative', marginBottom: '1rem' }}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        backgroundColor: 'var(--input-bg)',
+                        borderRadius: '0.75rem',
+                        padding: '0.75rem 1rem',
+                        border: '1px solid transparent',
+                        transition: 'all 0.2s',
+                    }}
+                        onFocus={(e) => e.currentTarget.style.borderColor = 'var(--accent-color)'}
+                        onBlur={(e) => e.currentTarget.style.borderColor = 'transparent'}
+                    >
+                        <FaSearch style={{ color: 'var(--text-secondary)', fontSize: '1.125rem' }} />
                         <input
                             type="text"
-                            className="bg-transparent border-none outline-none text-[var(--text-primary)] w-full ml-3 text-lg placeholder-[var(--text-secondary)]"
+                            style={{
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                outline: 'none',
+                                color: 'var(--text-primary)',
+                                width: '100%',
+                                marginLeft: '0.75rem',
+                                fontSize: '1.125rem'
+                            }}
                             placeholder="Search users, posts, messages..."
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             autoFocus
                         />
                         {query && (
-                            <button onClick={() => setQuery('')} className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                            <button
+                                onClick={() => setQuery('')}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    color: 'var(--text-secondary)',
+                                    cursor: 'pointer',
+                                    fontSize: '1rem'
+                                }}
+                            >
                                 <FaTimes />
                             </button>
                         )}
@@ -121,16 +149,26 @@ const Search = () => {
 
                 {/* Tabs */}
                 {isSearching && (
-                    <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                    <div className="no-scrollbar" style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap
-                                    ${activeTab === tab.id
-                                        ? 'bg-[var(--accent-color)] text-white'
-                                        : 'bg-[var(--card-bg)] text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.05)]'
-                                    }`}
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '9999px',
+                                    fontSize: '0.875rem',
+                                    fontWeight: 500,
+                                    whiteSpace: 'nowrap',
+                                    cursor: 'pointer',
+                                    border: 'none',
+                                    transition: 'background-color 0.2s',
+                                    backgroundColor: activeTab === tab.id ? 'var(--accent-color)' : 'var(--card-bg)',
+                                    color: activeTab === tab.id ? 'white' : 'var(--text-secondary)'
+                                }}
                             >
                                 {tab.icon && <span>{tab.icon}</span>}
                                 {tab.label}
@@ -141,27 +179,49 @@ const Search = () => {
             </div>
 
             {loading ? (
-                <div className="text-center py-12 text-[var(--text-secondary)]">
-                    <div className="animate-spin inline-block w-6 h-6 border-2 border-[var(--text-secondary)] border-t-[var(--accent-color)] rounded-full mb-2"></div>
+                <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-secondary)' }}>
+                    <div style={{
+                        display: 'inline-block',
+                        width: '1.5rem',
+                        height: '1.5rem',
+                        border: '2px solid var(--text-secondary)',
+                        borderTopColor: 'var(--accent-color)',
+                        borderRadius: '50%',
+                        marginBottom: '0.5rem',
+                        animation: 'spin 1s linear infinite'
+                    }} />
+                    <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
                     <p>Searching...</p>
                 </div>
             ) : isSearching ? (
-                <div className="space-y-8">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                     {/* Users Results */}
                     {showSection('users') && results.users.length > 0 && (
                         <div>
-                            {activeTab === 'all' && <h3 className="text-sm font-bold text-[var(--text-secondary)] uppercase mb-3 px-1">People</h3>}
-                            <div className="grid grid-cols-1 gap-2">
+                            {activeTab === 'all' && <h3 style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.75rem' }}>People</h3>}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem' }}>
                                 {results.users.map(u => (
                                     <div
                                         key={u.id}
-                                        className="flex items-center gap-3 p-3 rounded-xl bg-[var(--card-bg)] hover:bg-[rgba(255,255,255,0.05)] cursor-pointer transition-colors border border-transparent hover:border-[var(--border-color)]"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '0.75rem',
+                                            padding: '0.75rem',
+                                            borderRadius: '0.75rem',
+                                            backgroundColor: 'var(--card-bg)',
+                                            cursor: 'pointer',
+                                            border: '1px solid transparent',
+                                            transition: 'border-color 0.2s'
+                                        }}
                                         onClick={() => navigate(`/users/${u.id}`)}
+                                        onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
+                                        onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
                                     >
                                         <Avatar src={u.avatar} name={u.displayName} size="48px" />
-                                        <div className="flex flex-col">
-                                            <span className="font-medium text-lg text-[var(--text-primary)]">{u.displayName}</span>
-                                            <span className="text-sm text-[var(--text-secondary)]">@{u.displayName.toLowerCase().replace(/\s+/g, '')}</span>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <span style={{ fontWeight: 500, fontSize: '1.125rem', color: 'var(--text-primary)' }}>{u.displayName}</span>
+                                            <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>@{u.displayName.toLowerCase().replace(/\s+/g, '')}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -172,22 +232,31 @@ const Search = () => {
                     {/* Posts Results */}
                     {showSection('posts') && results.posts.length > 0 && (
                         <div>
-                            {activeTab === 'all' && <h3 className="text-sm font-bold text-[var(--text-secondary)] uppercase mb-3 px-1">Posts</h3>}
-                            <div className="space-y-4">
+                            {activeTab === 'all' && <h3 style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Posts</h3>}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 {results.posts.map(post => (
                                     <div
                                         key={post.id}
-                                        className="p-4 rounded-xl bg-[var(--card-bg)] border border-[var(--border-color)] cursor-pointer hover:border-[var(--accent-color)] transition-colors"
-                                        onClick={() => navigate(`/feed`)} // Ideally scrollTo post, but simplified for now
+                                        style={{
+                                            padding: '1rem',
+                                            borderRadius: '0.75rem',
+                                            backgroundColor: 'var(--card-bg)',
+                                            border: '1px solid var(--border-color)',
+                                            cursor: 'pointer',
+                                            transition: 'border-color 0.2s'
+                                        }}
+                                        onClick={() => navigate(`/feed`)}
+                                        onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--accent-color)'}
+                                        onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
                                     >
-                                        <div className="flex items-center gap-2 mb-2">
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                                             <Avatar src={post.User.avatar} name={post.User.displayName} size="32px" />
                                             <div>
-                                                <span className="font-semibold text-[var(--text-primary)] block leading-tight">{post.User.displayName}</span>
-                                                <span className="text-xs text-[var(--text-secondary)]">{new Date(post.createdAt).toLocaleDateString()}</span>
+                                                <span style={{ fontWeight: 600, color: 'var(--text-primary)', display: 'block', lineHeight: 1.25 }}>{post.User.displayName}</span>
+                                                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{new Date(post.createdAt).toLocaleDateString()}</span>
                                             </div>
                                         </div>
-                                        <p className="text-[var(--text-primary)] line-clamp-3">{post.content}</p>
+                                        <p style={{ color: 'var(--text-primary)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.content}</p>
                                     </div>
                                 ))}
                             </div>
@@ -197,27 +266,36 @@ const Search = () => {
                     {/* Messages Results */}
                     {showSection('messages') && results.messages.length > 0 && (
                         <div>
-                            {activeTab === 'all' && <h3 className="text-sm font-bold text-[var(--text-secondary)] uppercase mb-3 px-1">Messages</h3>}
-                            <div className="space-y-4">
+                            {activeTab === 'all' && <h3 style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Messages</h3>}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 {results.messages.map(msg => {
                                     const otherUser = msg.senderId === user.id ? msg.receiver : msg.sender;
                                     return (
                                         <div
                                             key={msg.id}
-                                            className="p-4 rounded-xl bg-[var(--card-bg)] border border-[var(--border-color)] cursor-pointer hover:border-[var(--accent-color)] transition-colors"
+                                            style={{
+                                                padding: '1rem',
+                                                borderRadius: '0.75rem',
+                                                backgroundColor: 'var(--card-bg)',
+                                                border: '1px solid var(--border-color)',
+                                                cursor: 'pointer',
+                                                transition: 'border-color 0.2s'
+                                            }}
                                             onClick={() => navigate(`/messages/${otherUser?.id}`)}
+                                            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--accent-color)'}
+                                            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
                                         >
-                                            <div className="flex items-center gap-3 mb-2">
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
                                                 {otherUser && <Avatar src={otherUser.avatar} name={otherUser.displayName} size="32px" />}
                                                 <div>
-                                                    <span className="font-semibold text-[var(--text-primary)] block leading-tight">
+                                                    <span style={{ fontWeight: 600, color: 'var(--text-primary)', display: 'block', lineHeight: 1.25 }}>
                                                         {msg.senderId === user.id ? `To: ${otherUser?.displayName}` : `From: ${otherUser?.displayName}`}
                                                     </span>
-                                                    <span className="text-xs text-[var(--text-secondary)]">{new Date(msg.createdAt).toLocaleDateString()}</span>
+                                                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{new Date(msg.createdAt).toLocaleDateString()}</span>
                                                 </div>
                                             </div>
-                                            <p className="text-[var(--text-secondary)] text-sm line-clamp-2">
-                                                {msg.senderId === user.id && <span className="font-bold text-[var(--accent-color)] mr-1">You:</span>}
+                                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                                {msg.senderId === user.id && <span style={{ fontWeight: 'bold', color: 'var(--accent-color)', marginRight: '0.25rem' }}>You:</span>}
                                                 {msg.content}
                                             </p>
                                         </div>
@@ -228,10 +306,10 @@ const Search = () => {
                     )}
 
                     {!hasResults && (
-                        <div className="text-center py-12 text-[var(--text-secondary)]">
-                            <FaSearch className="mx-auto text-4xl mb-4 opacity-30" />
-                            <p className="text-lg">No results found for "{query}"</p>
-                            <p className="text-sm opacity-70">Try searching for something else</p>
+                        <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-secondary)' }}>
+                            <FaSearch style={{ fontSize: '2.25rem', margin: '0 auto 1rem auto', opacity: 0.3 }} />
+                            <p style={{ fontSize: '1.125rem' }}>No results found for "{query}"</p>
+                            <p style={{ fontSize: '0.875rem', opacity: 0.7 }}>Try searching for something else</p>
                         </div>
                     )}
                 </div>
@@ -240,30 +318,42 @@ const Search = () => {
                 <div>
                     {history.length > 0 && (
                         <>
-                            <div className="flex justify-between items-center mb-4 px-1">
-                                <h3 className="text-sm font-bold text-[var(--text-secondary)] uppercase">Recent Searches</h3>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', padding: '0 0.25rem' }}>
+                                <h3 style={{ fontSize: '0.875rem', fontWeight: 'bold', color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Recent Searches</h3>
                                 <button
                                     onClick={handleClearHistory}
-                                    className="text-xs text-[var(--error-color)] hover:underline"
+                                    style={{ background: 'none', border: 'none', fontSize: '0.75rem', color: 'var(--error-color)', cursor: 'pointer', textDecoration: 'underline' }}
                                 >
                                     Clear All
                                 </button>
                             </div>
-                            <div className="space-y-1">
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
                                 {history.map(item => (
-                                    <div key={item.id} className="group flex justify-between items-center p-3 rounded-xl hover:bg-[rgba(255,255,255,0.05)] cursor-pointer transition-colors">
+                                    <div
+                                        key={item.id}
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem', borderRadius: '0.75rem', cursor: 'pointer', transition: 'background-color 0.2s', backgroundColor: 'transparent' }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+                                            e.currentTarget.querySelector('.delete-btn').style.opacity = '1';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'transparent';
+                                            e.currentTarget.querySelector('.delete-btn').style.opacity = '0';
+                                        }}
+                                    >
                                         <div
-                                            className="flex items-center gap-3 flex-1"
+                                            style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1 }}
                                             onClick={() => handleSelectHistory(item.query)}
                                         >
-                                            <div className="w-8 h-8 rounded-full bg-[rgba(255,255,255,0.05)] flex items-center justify-center">
-                                                <FaHistory className="text-[var(--text-secondary)] text-sm" />
+                                            <div style={{ width: '2rem', height: '2rem', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                <FaHistory style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }} />
                                             </div>
-                                            <span className="text-[var(--text-primary)] font-medium">{item.query}</span>
+                                            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{item.query}</span>
                                         </div>
                                         <button
                                             onClick={(e) => { e.stopPropagation(); handleDeleteHistoryItem(item.id); }}
-                                            className="text-[var(--text-secondary)] hover:text-[var(--error-color)] opacity-0 group-hover:opacity-100 transition-opacity p-2"
+                                            className="delete-btn"
+                                            style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', opacity: 0, transition: 'opacity 0.2s', padding: '0.5rem', cursor: 'pointer' }}
                                             title="Remove from history"
                                         >
                                             <FaTimes />
@@ -274,10 +364,10 @@ const Search = () => {
                         </>
                     )}
                     {history.length === 0 && (
-                        <div className="flex flex-col items-center justify-center py-20 text-[var(--text-secondary)] opacity-50">
-                            <FaSearch className="text-6xl mb-6" />
-                            <p className="text-xl font-medium">Search for anything</p>
-                            <p className="text-sm mt-2">Find people, posts, and messages</p>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '5rem 0', color: 'var(--text-secondary)', opacity: 0.5 }}>
+                            <FaSearch style={{ fontSize: '3.75rem', marginBottom: '1.5rem' }} />
+                            <p style={{ fontSize: '1.25rem', fontWeight: 500 }}>Search for anything</p>
+                            <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Find people, posts, and messages</p>
                         </div>
                     )}
                 </div>
