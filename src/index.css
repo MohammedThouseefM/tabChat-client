@@ -129,6 +129,12 @@ button {
   height: 100%;
 }
 
+.flex-1 {
+  flex: 1;
+  min-height: 0;
+  /* Critical for nested scrolling */
+}
+
 .relative {
   position: relative;
 }
