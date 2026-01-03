@@ -93,7 +93,7 @@ const UserProfile = () => {
             <h3 className="text-xl font-bold mb-4">Posts</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 {posts.length > 0 ? (
-                    posts.map(post => <PostCard key={post.id} post={post} />)
+                    posts.map(post => <PostCard key={post.id} post={{ ...post, onDelete: (id) => setPosts(posts.filter(p => p.id !== id)) }} />)
                 ) : (
                     <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>No posts yet.</p>
                 )}

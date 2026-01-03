@@ -78,7 +78,7 @@ const CreatePost = () => {
     };
 
     return (
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '1rem' }}>
             <h2 className="text-xl font-bold text-accent-color mb-6">Create New Post</h2>
             <div className="card mb-4" style={{ position: 'relative' }}>
                 <form onSubmit={handleSubmit}>
@@ -89,20 +89,20 @@ const CreatePost = () => {
                         onChange={(e) => setContent(e.target.value)}
                         style={{
                             resize: 'none',
-                            marginBottom: '1rem',
-                            minHeight: '200px'
+                            marginBottom: '0.75rem',
+                            minHeight: '100px'
                         }}
-                        rows="6"
+                        rows="3"
                     />
 
                     {/* AI Tools */}
-                    <div className="flex gap-2 mb-4 flex-wrap">
+                    <div className="flex gap-2 mb-3 flex-wrap">
                         <button
                             type="button"
                             onClick={() => handleAIEnhance('tone', 'professional')}
                             className="btn"
                             disabled={aiLoading}
-                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem', background: 'rgba(255,255,255,0.1)' }}
+                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', background: 'rgba(255,255,255,0.1)' }}
                         >
                             <FaMagic /> Professional
                         </button>
@@ -111,7 +111,7 @@ const CreatePost = () => {
                             onClick={() => handleAIEnhance('tone', 'casual')}
                             className="btn"
                             disabled={aiLoading}
-                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem', background: 'rgba(255,255,255,0.1)' }}
+                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', background: 'rgba(255,255,255,0.1)' }}
                         >
                             <FaMagic /> Casual
                         </button>
@@ -120,7 +120,7 @@ const CreatePost = () => {
                             onClick={() => handleAIEnhance('grammar')}
                             className="btn"
                             disabled={aiLoading}
-                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem', background: 'rgba(255,255,255,0.1)' }}
+                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', background: 'rgba(255,255,255,0.1)' }}
                         >
                             <FaMagic /> Fix Grammar
                         </button>
@@ -129,7 +129,7 @@ const CreatePost = () => {
                             onClick={() => handleAIEnhance('hashtags')}
                             className="btn"
                             disabled={aiLoading}
-                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem', background: 'rgba(255,255,255,0.1)' }}
+                            style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', background: 'rgba(255,255,255,0.1)' }}
                         >
                             # Hashtags
                         </button>

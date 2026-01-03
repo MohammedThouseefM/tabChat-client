@@ -39,7 +39,7 @@ const PostCard = ({ post: initialPost }) => {
         try {
             await API.delete(`/posts/${post.id}`);
             // Notify parent to remove post from list
-            if (initialPost.onDelete) initialPost.onDelete(post.id);
+            if (post.onDelete) post.onDelete(post.id);
         } catch (err) {
             console.error("Delete failed", err);
             alert("Failed to delete post");
